@@ -85,6 +85,13 @@ config.mouse_bindings = {
   },
 }
 
-config.default_prog = { '/opt/homebrew/bin/tmux', 'new-session', '-A', '-s', 'main' }
+-- Create a fresh tmux session for each new WezTerm window/tab. Using
+-- `new-session -A -s main` here makes every window attach to the same tmux
+-- client, which looks like the terminal contents were duplicated.
+config.default_prog = {
+  '/bin/zsh',
+  '-lc',
+  'exec /opt/homebrew/bin/tmux new-session -s "wezterm-$(date +%Y%m%d%H%M%S)-$$"',
+}
 
 return config
